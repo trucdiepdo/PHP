@@ -78,7 +78,7 @@ if(!empty($_POST['register-user'])){
         if(!filter_var($_POST["userEmail"], FILTER_VALIDATE_EMAIL)){
             $error_message = "Invalid Email Address";
         } else if(!isset($_POST["gender"])) {
-            $error_message = " Check Gender";
+            $error_message = "Check Gender";
         } else if(!isset($_POST["terms"])) {
             // Validation to check if Terms and Conditions are accepted
             $error_message = "Accept Terms and Conditions to Register";
