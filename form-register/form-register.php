@@ -62,26 +62,25 @@ if(!empty($_POST['register-user'])){
         }
     }
     
+    if (!preg_match("/^[a-zA-Z ]*$/",$_POST['userName'])) {
+        $error_message = "Only letters and white space allowed";
+    }
+    
+    // Password Matching Validation
+    if($_POST['password'] != $_POST['confirm_password']){
+        $error_message = 'Passwords should be same<br>';
+    }
+    
     // If exist variable $error_message
     if(!isset($error_message)){
-         
-        // Password Matching Validation
-        if($_POST['password'] != $_POST['confirm_password']){
-            $error_message = 'Passwords should be same<br>';
-        }
         
         // Email Validation
         if(!filter_var($_POST["userEmail"], FILTER_VALIDATE_EMAIL)){
             $error_message = "Invalid Email Address";
-        }
-        
-        // Validation to check if gender is selected
-        if(!isset($_POST["gender"])) {
-            $error_message = " All Fields are required";
-        }
-        
-        // Validation to check if Terms and Conditions are accepted
-        if(!isset($_POST["terms"])) {
+        } else if(!isset($_POST["gender"])) {
+            $error_message = " Check Gender";
+        } else if(!isset($_POST["terms"])) {
+            // Validation to check if Terms and Conditions are accepted
             $error_message = "Accept Terms and Conditions to Register";
         }
         
@@ -103,45 +102,43 @@ if(!empty($_POST['register-user'])){
 <?php }?>
 
 <form name="frmRegistration" method="post" action="">
-<table border="0" width="500" align="center" class="demo-table">
-<tr>
-<td>User Name</td>
-<td><input type="text" class="demoInputBox" name="userName" value="<?php if(isset($_POST['userName'])) echo $_POST['userName']; ?>"></td>
-</tr>
-<tr>
-<td>First Name</td>
-<td><input type="text" class="demoInputBox" name="firstName" value="<?php if(isset($_POST['firstName'])) echo $_POST['firstName']; ?>"></td>
-</tr>
-<tr>
-<td>Last Name</td>
-<td><input type="text" class="demoInputBox" name="lastName" value="<?php if(isset($_POST['lastName'])) echo $_POST['lastName']; ?>"></td>
-</tr>
-<tr>
-<td>Password</td>
-<td><input type="password" class="demoInputBox" name="password" value=""></td>
-</tr>
-<tr>
-<td>Confirm Password</td>
-<td><input type="password" class="demoInputBox" name="confirm_password" value=""></td>
-</tr>
-<tr>
-<td>Email</td>
-<td><input type="text" class="demoInputBox" name="userEmail" value="<?php if(isset($_POST['userEmail'])) echo $_POST['userEmail']; ?>"></td>
-</tr>
-<tr>
-<td>Gender</td>
-<td><input type="radio" name="gender" value="Male" <?php if(isset($_POST['gender']) && $_POST['gender']=="Male") { ?>checked<?php  } ?>> Male
-<input type="radio" name="gender" value="Female" <?php if(isset($_POST['gender']) && $_POST['gender']=="Female") { ?>checked<?php  } ?>> Female
-</td>
-</tr>
-<tr>
-<td colspan=2>
-<input type="checkbox" name="terms"> I accept Terms and Conditions 
-<input type="submit" name="register-user" value="Register" class="btnRegister"></td>
-</tr>
-</table>
+	<table border="0" width="500" align="center" class="demo-table">
+		<tr>
+			<td>User Name</td>
+			<td><input type="text" class="demoInputBox" name="userName" value="<?php if(isset($_POST['userName'])) echo $_POST['userName']; ?>"></td>
+		</tr>
+		<tr>
+			<td>First Name</td>
+			<td><input type="text" class="demoInputBox" name="firstName" value="<?php if(isset($_POST['firstName'])) echo $_POST['firstName']; ?>"></td>
+		</tr>
+		<tr>
+			<td>Last Name</td>
+			<td><input type="text" class="demoInputBox" name="lastName" value="<?php if(isset($_POST['lastName'])) echo $_POST['lastName']; ?>"></td>
+		</tr>
+		<tr>
+			<td>Password</td>
+			<td><input type="password" class="demoInputBox" name="password" value=""></td>
+		</tr>
+		<tr>
+			<td>Confirm Password</td>
+			<td><input type="password" class="demoInputBox" name="confirm_password" value=""></td>
+		</tr>
+		<tr>
+			<td>Email</td>
+			<td><input type="text" class="demoInputBox" name="userEmail" value="<?php if(isset($_POST['userEmail'])) echo $_POST['userEmail']; ?>"></td>
+		</tr>
+		<tr>
+			<td>Gender</td>
+			<td><input type="radio" name="gender" value="Male" <?php if(isset($_POST['gender']) && $_POST['gender']=="Male") { ?>checked<?php  } ?>> Male
+				<input type="radio" name="gender" value="Female" <?php if(isset($_POST['gender']) && $_POST['gender']=="Female") { ?>checked<?php  } ?>> Female
+			</td>
+		</tr>
+		<tr>
+			<td colspan=2>
+				<input type="checkbox" name="terms"> I accept Terms and Conditions 
+				<input type="submit" name="register-user" value="Register" class="btnRegister"></td>
+		</tr>
+	</table>
 </form>
 </body>
-
-
 </html>
