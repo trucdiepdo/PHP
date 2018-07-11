@@ -1,0 +1,77 @@
+-- Table: public."M_GROUP"
+
+-- DROP TABLE public."M_GROUP";
+
+CREATE TABLE public."M_GROUP"
+(
+    "GROUP_ID" character(4) COLLATE pg_catalog."default" NOT NULL,
+    "GROUP_NM" character(50) COLLATE pg_catalog."default",
+    "GROUP_FLG" character(2) COLLATE pg_catalog."default",
+    "GROUP_ORDER" integer,
+    "DEL_FLG" character(1) COLLATE pg_catalog."default",
+    "ADD_DATE" date,
+    "ADD_EMP_ID" character(10) COLLATE pg_catalog."default",
+    "ADD_EMP_NAME" character(30) COLLATE pg_catalog."default",
+    "UPDATE_DATE" date,
+    "UPDATE_EMP_ID" character(10) COLLATE pg_catalog."default",
+    "UPDATE_EMP_NAME" character(30) COLLATE pg_catalog."default",
+    CONSTRAINT "M_GROUP_pkey" PRIMARY KEY ("GROUP_ID")
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."M_GROUP"
+    OWNER to postgres;
+    
+    
+    
+    
+   --------------------
+   -- Table: public."M_GROUP_OFFICE"
+
+-- DROP TABLE public."M_GROUP_OFFICE";
+
+CREATE TABLE public."M_GROUP_OFFICE"
+(
+    "GROUP_ID" character(4) COLLATE pg_catalog."default" NOT NULL,
+    "GROUP_FLG" character(2) COLLATE pg_catalog."default" NOT NULL,
+    "OFFICE_CD" character(6) COLLATE pg_catalog."default" NOT NULL,
+    "ADD_DATE" date,
+    "ADD_EMP_ID" character(10) COLLATE pg_catalog."default",
+    CONSTRAINT "M_GROUP_OFFICE_pkey" PRIMARY KEY ("GROUP_ID", "GROUP_FLG", "OFFICE_CD")
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."M_GROUP_OFFICE"
+    OWNER to postgres;
+    
+    -------------
+    
+    -- Table: public."M_OFFICE"
+
+-- DROP TABLE public."M_OFFICE";
+
+CREATE TABLE public."M_OFFICE"
+(
+    "OFFICE_CD" character(10) COLLATE pg_catalog."default" NOT NULL,
+    "PERSON" character(100) COLLATE pg_catalog."default",
+    "STATE" character(100) COLLATE pg_catalog."default",
+    "OFFICE_NAME" character(100) COLLATE pg_catalog."default",
+    "QUALIFICATION" character(100) COLLATE pg_catalog."default",
+    "OFFICE_SNAME" character(100) COLLATE pg_catalog."default",
+    "PHONE" character(10) COLLATE pg_catalog."default",
+    "ADDRESS" character(100) COLLATE pg_catalog."default",
+    CONSTRAINT "M_OFFICE_pkey" PRIMARY KEY ("OFFICE_CD")
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public."M_OFFICE"
+    OWNER to postgres;
