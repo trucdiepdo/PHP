@@ -1,0 +1,167 @@
+<?php 
+$db = pg_connect("host=172.16.3.82 port=5432 dbname=Training user=postgres password=have@tript0Singapore");
+if(!$db) {
+    echo "Error : Unable to open database\n";
+} else {
+    echo "Opened database successfully\n";
+}
+
+?>
+<html>
+<head>
+	<title>Assignment</title>
+	<script>
+	function showUser(str) {
+// 		  if (str=="") {
+// 		    document.getElementById("txtHint").innerHTML="";
+// 		    return;
+// 		  } 
+		  if (window.XMLHttpRequest) {
+		    // code for IE7+, Firefox, Chrome, Opera, Safari
+		    xmlhttp=new XMLHttpRequest();
+		  } else { // code for IE6, IE5
+		    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		  }
+		  xmlhttp.onreadystatechange=function() {
+		    if (this.readyState==4 && this.status==200) {
+		      document.getElementById("txtHint").innerHTML=this.responseText;
+		    }
+		  }
+		  xmlhttp.open("GET","page1.php?q="+str,true);
+		  xmlhttp.send();
+		}
+	</script>
+</head>
+<body>
+	<div id="main">
+		<div id="body">
+			<div>
+				<table border="1">
+					<tbody>
+						<tr>
+							<td>
+								<span><b>DANH SACH NHOM</b></span>
+							</td>
+							<td>
+								<div>
+									<a href="#">CAP NHAT</a>
+								</div>
+								<div>
+									<a href="#">DONG</a>
+								</div>
+							</td>							
+						</tr>
+					</tbody>
+				</table>
+				<br>
+				<table border="1">
+					<tbody>
+						<tr>
+							<td>SU DUNG</td>
+						</tr>
+						<tr>
+							<td>
+								<select name="users" onchange="showUser(this.value)">
+									<?php 
+									$result = pg_query($db, 'SELECT distinct "GROUP_FLG" FROM public."M_GROUP" ORDER BY "GROUP_FLG"');
+									while($row=pg_fetch_row($result)){
+									    echo "<option value=''>Use $row[0]</option>";
+									}
+									   ?>
+									    </select>
+									 
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<br>
+			<!-- Show -->
+			
+			<div>
+				<div>
+						<table border="1">
+							<thead>
+								<tr>
+									<th>TEN NHOM</th>
+									<th>THU TU HIEN THI</th>
+									<th>XOA</th>
+									<th>SO LUONG LIEN KET</th>
+								</tr>
+							</thead>
+							<tbody>
+							<?php 
+							 $ret = pg_query($db,'SELECT "M_GROUP"."GROUP_NM", "M_GROUP"."GROUP_ORDER", "M_GROUP"."DEL_FLG", COUNT("M_GROUP_OFFICE"."OFFICE_CD")
+	                                                   FROM PUBLIC."M_GROUP" INNER JOIN public."M_GROUP_OFFICE" 
+	                                                   ON "M_GROUP"."GROUP_ID" = "M_GROUP_OFFICE"."GROUP_ID"
+	                                                   GROUP BY "M_GROUP"."GROUP_NM", "M_GROUP"."GROUP_ORDER", "M_GROUP"."DEL_FLG"');
+							 while($row=pg_fetch_row($ret)){
+								echo "<tr>
+								<td>$row[0]</td>
+								<td>$row[1]</td>
+								<td>"; ?>
+								   <?php 
+								   if($row[2] == 1)
+								       echo '<img src="http://172.16.3.82:8082/assets/img/accept.gif">';
+								   else
+								       echo '';
+								   ?>
+								<?php echo "
+                                </td>
+								<td>$row[3]</td>
+								</tr>";
+                                }
+							?>
+							</tbody>
+						</table>
+					</div>
+				<br>
+			
+					<div>
+					<p>
+						<span><b>THONG TIN VAN PHONG BAN HANG THUOC VE NHOM DUOC CHON</b></span>
+					</p>
+					<div>
+						<table border="1">
+							<thead>
+								<tr>
+									<th>PHONG KINH DOAN<br>MA SO</th>
+									<th>TEN VP BAN HANG</th>
+									<th>TRINH DO CHUYEN MON</th>
+									<th>DIA CHI</th>
+									<th>NHAN VIEN BAN HANG</th>
+									<th>VI TRI THAM DU HOI NGHI BAN HANG</th>
+								</tr>
+							</thead>
+							<tbody id="officeInGroupResults">
+							<?php 
+							$res = pg_query($db,'SELECT "OFFICE_CD", "OFFICE_NAME", "QUALIFICATION", "ADDRESS", "PERSON", "OFFICE_SNAME"
+	FROM PUBLIC."M_OFFICE"');
+							while($row=pg_fetch_row($res)) {
+								echo "<tr>
+									<td>$row[0]</td>
+									<td>$row[1]</td>
+									<td>$row[2]</td>
+									<td>$row[3]</td>
+									<td>$row[4]</td>
+									<td>$row[5]</td>
+								</tr>";
+							}
+								?>
+							</tbody>
+						</table>
+						<input type="hidden" value="4"> 
+						<input type="hidden" value="2"> 
+						<input type="hidden" value="0">
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<footer>
+			<div>NGAY CAP NHAT : 2018/06/29 10:22:52 &emsp; CAP NHAT BOI : 0003
+				&emsp; TIEN-TT</div>
+		</footer>
+</body>
+</html>
