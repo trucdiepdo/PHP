@@ -7,14 +7,14 @@ CREATE TABLE public."M_GROUP"
     "GROUP_ID" character(4) COLLATE pg_catalog."default" NOT NULL,
     "GROUP_NM" character(50) COLLATE pg_catalog."default",
     "GROUP_FLG" character(2) COLLATE pg_catalog."default",
-    "GROUP_ORDER" integer,
     "DEL_FLG" character(1) COLLATE pg_catalog."default",
     "ADD_DATE" date,
     "ADD_EMP_ID" character(10) COLLATE pg_catalog."default",
     "ADD_EMP_NAME" character(30) COLLATE pg_catalog."default",
     "UPDATE_DATE" date,
-    "UPDATE_EMP_ID" character(10) COLLATE pg_catalog."default",
+    "UPDATE_EMPT_ID" character(10) COLLATE pg_catalog."default",
     "UPDATE_EMP_NAME" character(30) COLLATE pg_catalog."default",
+    "GROUP_ORDER" character(2) COLLATE pg_catalog."default",
     CONSTRAINT "M_GROUP_pkey" PRIMARY KEY ("GROUP_ID")
 )
 WITH (
@@ -29,7 +29,7 @@ ALTER TABLE public."M_GROUP"
     
     
    --------------------
-   -- Table: public."M_GROUP_OFFICE"
+ -- Table: public."M_GROUP_OFFICE"
 
 -- DROP TABLE public."M_GROUP_OFFICE";
 
@@ -49,10 +49,9 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."M_GROUP_OFFICE"
     OWNER to postgres;
-    
     -------------
     
-    -- Table: public."M_OFFICE"
+   -- Table: public."M_OFFICE"
 
 -- DROP TABLE public."M_OFFICE";
 
