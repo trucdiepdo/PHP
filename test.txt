@@ -1,36 +1,14 @@
 <?php 
-$db = pg_connect("host=172.16.3.82 port=5432 dbname=Training user=postgres password=have@tript0Singapore");
-if(!$db) {
-    echo "Error : Unable to open database\n";
-} else {
-    echo "Opened database successfully\n";
-}
-
+$db = pg_connect("host=localhost port=5432 dbname=training user=postgres password=have@tript0Singapore");
+// if(!$db) {
+//     echo "Error : Unable to open database\n";
+// } else {
+//     echo "Opened database successfully\n";
+// }
 ?>
 <html>
 <head>
 	<title>Assignment</title>
-	<script>
-	function showUser(str) {
-// 		  if (str=="") {
-// 		    document.getElementById("txtHint").innerHTML="";
-// 		    return;
-// 		  } 
-		  if (window.XMLHttpRequest) {
-		    // code for IE7+, Firefox, Chrome, Opera, Safari
-		    xmlhttp=new XMLHttpRequest();
-		  } else { // code for IE6, IE5
-		    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-		  }
-		  xmlhttp.onreadystatechange=function() {
-		    if (this.readyState==4 && this.status==200) {
-		      document.getElementById("txtHint").innerHTML=this.responseText;
-		    }
-		  }
-		  xmlhttp.open("GET","page1.php?q="+str,true);
-		  xmlhttp.send();
-		}
-	</script>
 </head>
 <body>
 	<div id="main">
@@ -40,36 +18,37 @@ if(!$db) {
 					<tbody>
 						<tr>
 							<td>
-								<span><b>DANH SACH NHOM</b></span>
+								<span><b>グループ一覧</b></span>
 							</td>
 							<td>
 								<div>
-									<a href="#">CAP NHAT</a>
+									<a id="btnUpdate" href="#">更新</a>
+									
 								</div>
 								<div>
-									<a href="#">DONG</a>
+									<a id="btnClose" href="#" onclick="close_window();return false;">閉じる</a>
 								</div>
 							</td>							
 						</tr>
 					</tbody>
 				</table>
 				<br>
-				<table border="1">
+				<table border="1" style="width: 250px">
 					<tbody>
 						<tr>
-							<td>SU DUNG</td>
+							<td style="background-color: #bbddff">使用する</td>
 						</tr>
-						<tr>
+						<tr style="background-color: white">
 							<td>
-								<select name="users" onchange="showUser(this.value)">
+								<select name="dllGroup" id="dllGroup" style="width: 230px" onchange = "selectChanged(this.value)">
 									<?php 
-									$result = pg_query($db, 'SELECT distinct "GROUP_FLG" FROM public."M_GROUP" ORDER BY "GROUP_FLG"');
-									while($row=pg_fetch_row($result)){
-									    echo "<option value=''>Use $row[0]</option>";
-									}
-									   ?>
-									    </select>
-									 
+	                                 $ret = pg_query($db,'select distinct "GROUP_FLG" from public."M_GROUP_OFFICE" 
+                                                            order by "GROUP_FLG"');
+	                                 while($row = pg_fetch_row($ret)){
+	                                 echo "<option value =''>Use " .$row[0] ."</option>";
+	                                 }
+	                               ?>
+								</select>
 							</td>
 						</tr>
 					</tbody>
@@ -83,35 +62,35 @@ if(!$db) {
 						<table border="1">
 							<thead>
 								<tr>
-									<th>TEN NHOM</th>
-									<th>THU TU HIEN THI</th>
-									<th>XOA</th>
-									<th>SO LUONG LIEN KET</th>
+									<th style="width: 900px;">グループ名</th>
+									<th style="width: 90px;">表示順</th>
+									<th style="width: 90px;">削除</th>
+									<th style="width: 100px;">所属件数</th>
 								</tr>
 							</thead>
 							<tbody>
 							<?php 
-							 $ret = pg_query($db,'SELECT "M_GROUP"."GROUP_NM", "M_GROUP"."GROUP_ORDER", "M_GROUP"."DEL_FLG", COUNT("M_GROUP_OFFICE"."OFFICE_CD")
-	                                                   FROM PUBLIC."M_GROUP" INNER JOIN public."M_GROUP_OFFICE" 
-	                                                   ON "M_GROUP"."GROUP_ID" = "M_GROUP_OFFICE"."GROUP_ID"
-	                                                   GROUP BY "M_GROUP"."GROUP_NM", "M_GROUP"."GROUP_ORDER", "M_GROUP"."DEL_FLG"');
-							 while($row=pg_fetch_row($ret)){
-								echo "<tr>
-								<td>$row[0]</td>
-								<td>$row[1]</td>
-								<td>"; ?>
-								   <?php 
-								   if($row[2] == 1)
-								       echo '<img src="http://172.16.3.82:8082/assets/img/accept.gif">';
-								   else
-								       echo '';
-								   ?>
-								<?php echo "
-                                </td>
-								<td>$row[3]</td>
+							$ret = pg_query($db, 'select "M_GROUP"."GROUP_NM", "M_GROUP"."GROUP_ORDER", "M_GROUP"."DEL_FLG", count("M_GROUP_OFFICE"."OFFICE_CD") 
+	                                                     from public."M_GROUP" inner join public."M_GROUP_OFFICE"
+	                                                     on "M_GROUP"."GROUP_ID" = "M_GROUP_OFFICE"."GROUP_ID"
+	                                                     group by "M_GROUP"."GROUP_NM", "M_GROUP"."GROUP_ORDER", "M_GROUP"."DEL_FLG"');
+							while($row = pg_fetch_row($ret)){
+								echo 
+								"<tr>
+									<td>$row[0]</td>
+									<td>$row[1]</td> 
+									<td>"; ?>
+									<?php 
+									if($row[2] == 1)
+									       echo '<img src="https://www.zfshare.com/theme/Template-3/img/green_ticks.gif" width="20">';
+									else
+									    echo '';
+									?>
+							<?php 
+								echo "</td>
+								    <td>$row[3]</td>
 								</tr>";
-                                }
-							?>
+							}?>
 							</tbody>
 						</table>
 					</div>
@@ -119,26 +98,26 @@ if(!$db) {
 			
 					<div>
 					<p>
-						<span><b>THONG TIN VAN PHONG BAN HANG THUOC VE NHOM DUOC CHON</b></span>
+						<span><b>◆選択したグループに属する営業所情報</b></span>
 					</p>
 					<div>
 						<table border="1">
 							<thead>
 								<tr>
-									<th>PHONG KINH DOAN<br>MA SO</th>
-									<th>TEN VP BAN HANG</th>
-									<th>TRINH DO CHUYEN MON</th>
-									<th>DIA CHI</th>
-									<th>NHAN VIEN BAN HANG</th>
-									<th>VI TRI THAM DU HOI NGHI BAN HANG</th>
+									<th style="width: 90px;">営業所<br>コード</th>
+									<th style="width: 250px;">営業所名</th>
+									<th style="width: 120px;">資格</th>
+									<th style="width: 425px;">住所</th>
+									<th style="width: 120px;">営業担当</th>
+									<th style="width: 175px;">販売会議出席場所</th>
 								</tr>
 							</thead>
 							<tbody id="officeInGroupResults">
-							<?php 
-							$res = pg_query($db,'SELECT "OFFICE_CD", "OFFICE_NAME", "QUALIFICATION", "ADDRESS", "PERSON", "OFFICE_SNAME"
-	FROM PUBLIC."M_OFFICE"');
-							while($row=pg_fetch_row($res)) {
-								echo "<tr>
+								<?php 
+								$res = pg_query($db, 'select "OFFICE_CD", "PERSON", "QUALIFICATION", "ADDRESS", "OFFICE_SNAME", "STATE"
+	                                                   from public."M_OFFICE"');
+								while($row = pg_fetch_row($res)) {
+								    echo "<tr>
 									<td>$row[0]</td>
 									<td>$row[1]</td>
 									<td>$row[2]</td>
@@ -146,7 +125,7 @@ if(!$db) {
 									<td>$row[4]</td>
 									<td>$row[5]</td>
 								</tr>";
-							}
+								}
 								?>
 							</tbody>
 						</table>
@@ -160,7 +139,7 @@ if(!$db) {
 		</div>
 	</div>
 	<footer>
-			<div>NGAY CAP NHAT : 2018/06/29 10:22:52 &emsp; CAP NHAT BOI : 0003
+			<div>更新日時 : 2018/06/29 10:22:52 &emsp; 更新者 : 0003
 				&emsp; TIEN-TT</div>
 		</footer>
 </body>
