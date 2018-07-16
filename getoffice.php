@@ -1,6 +1,6 @@
 <?php
 if(isset($_POST)) {
-    $db = pg_connect("host=172.16.3.82 port=5432 dbname=Training user=postgres password=have@tript0Singapore");
+    $db = pg_connect("host=localhost port=5432 dbname=training user=postgres password=have@tript0Singapore");
     $q = $_POST['groupInforResults'];
     $res3 = pg_query($db, 'select "M_GROUP_OFFICE"."GROUP_ID", "M_OFFICE"."OFFICE_CD", "M_OFFICE"."OFFICE_SNAME", "M_OFFICE"."QUALIFICATION", 
                                         "M_OFFICE"."ADDRESS", "M_OFFICE"."PERSON", "M_OFFICE"."STATE"
