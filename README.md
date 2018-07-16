@@ -1,2 +1,2 @@
 # PHP
-PHP training (Fujinet)
+PHP training (F)
