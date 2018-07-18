@@ -1,5 +1,5 @@
 <?php
-$db = pg_connect("host=172.16.3.82 port=5432 dbname=Training user=postgres password=have@tript0Singapore");
+$db = pg_connect("host=localhost port=5432 dbname=training user=postgres password=have@tript0Singapore");
 // if(!$db) {
 //     echo "Error : Unable to open database\n";
 // } else {
@@ -14,7 +14,7 @@ $db = pg_connect("host=172.16.3.82 port=5432 dbname=Training user=postgres passw
 	<meta http-equiv="Content-Language" content="ja">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="Pragma" content="no-cache">
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="format.css">
 	<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
 	<script type="text/javascript">
 	$("#ddlGroup").ready(function(){
@@ -49,6 +49,7 @@ $db = pg_connect("host=172.16.3.82 port=5432 dbname=Training user=postgres passw
 						alert("Failed to load");
 					}	
 				});
+					$('#officeInGroupResults').html('');
 			});
 			 	$('#infoTable').on('click', 'tbody tr', function(event) {
 		 		  $(this).css("background","#ffe7a0").siblings().css("background","");
