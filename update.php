@@ -1,19 +1,16 @@
-<?php
-$db = pg_connect("host=172.16.3.82 port=5432 dbname=Training user=postgres password=have@tript0Singapore");
-// if(!$db) {
-//     echo "Error : Unable to open database\n";
-// } else {
-//     echo "Opened database successfully\n";
-// }
-?>
+
+
 <!DOCTYPE html>
 <html lang="ja-jp">
 <head>
 	<title>グループ一覧</title>
 	<meta http-equiv="Content-Language" content="ja">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link rel="stylesheet" href="style.css">
-	<script type="text/javascript" src="jquery.min.js"></script>
+	<link rel="stylesheet" href="format.css">
+	<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+	<script type="text/javascript">
+
+	</script>
 </head>
 <body>
 	<div id="main">
@@ -56,9 +53,42 @@ $db = pg_connect("host=172.16.3.82 port=5432 dbname=Training user=postgres passw
 									</tr>
 								</thead>
 								<tbody id="groupInforResults">
-								<?php 
-								
-	                               ?>
+								<?php
+if(isset($_GET)) {
+    $db = pg_connect("host=localhost port=5432 dbname=training user=postgres password=have@tript0Singapore");
+    $q = $_GET['groupflg'];
+    $res2 = pg_query($db, 'SELECT
+	"M_GROUP"."GROUP_ID",
+	"M_GROUP"."GROUP_NM",
+	"M_GROUP"."GROUP_ORDER",
+	"M_GROUP"."DEL_FLG",
+	COUNT( "M_GROUP_OFFICE"."OFFICE_CD" ) AS "DEM"
+FROM
+	PUBLIC."M_GROUP"
+	left JOIN PUBLIC."M_GROUP_OFFICE" ON "M_GROUP"."GROUP_FLG" = "M_GROUP_OFFICE"."GROUP_FLG"
+	AND "M_GROUP"."GROUP_ID" = "M_GROUP_OFFICE"."GROUP_ID"
+WHERE
+	"M_GROUP"."GROUP_FLG" = \''.$q.'\'
+GROUP BY
+	"M_GROUP"."GROUP_ID",
+	"M_GROUP"."GROUP_NM",
+	"M_GROUP"."GROUP_ORDER",
+	"M_GROUP"."DEL_FLG"
+ORDER BY
+	"M_GROUP"."GROUP_ORDER"');
+    
+    
+    while($row = pg_fetch_row($res2)){
+        echo
+        "<tr id-get-office='$row[0]'>
+            <td></td>
+			<td style='text-align: left; word-wrap: break-word;'>$row[1]</td>
+			<td style='text-align: center;'>$row[2]</td>
+			<td style='text-align: center;'>$row[3]</td>
+				<td style='text-align: right;'>$row[4]</td>
+				</tr>";
+    }
+}?>
 								<tr value="getNewId();" class="d-none">
 									<td><input onclick="clearText(this); return false;" style="width: 50px; text-align: center; font-size:7pt; word-wrap: break-word;" type="button" value="クリア"></td>
 									<td><input name="groupnm" style="width: 865px; text-align: left;" type="text" value=""></td>
