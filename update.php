@@ -1,10 +1,19 @@
-<html><head>
-<title>グループ一覧</title>
-<meta http-equiv="Content-Language" content="ja">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link rel="stylesheet" href="style.css">
-<script type="text/javascript" src="jquery.min.js"></script>
-<link>
+<?php
+$db = pg_connect("host=172.16.3.82 port=5432 dbname=Training user=postgres password=have@tript0Singapore");
+// if(!$db) {
+//     echo "Error : Unable to open database\n";
+// } else {
+//     echo "Opened database successfully\n";
+// }
+?>
+<!DOCTYPE html>
+<html lang="ja-jp">
+<head>
+	<title>グループ一覧</title>
+	<meta http-equiv="Content-Language" content="ja">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="style.css">
+	<script type="text/javascript" src="jquery.min.js"></script>
 </head>
 <body>
 	<div id="main">
@@ -47,13 +56,17 @@
 									</tr>
 								</thead>
 								<tbody id="groupInforResults">
-								<tr value="3" class="d-none">
-									<td><input onclick="clearText(this); return false;" style="width: 50px; text-align: center; font-size:7pt; word-wrap: break-word;" type="button" value="������"></td>
-									<td><input name="groupnm" style="width: 865px; text-align: left;" type="text" value="demo_2"></td>
-									<td><input name="groupoder" style="width: 100px; text-align: right;" type="number" value="10"></td>
+								<?php 
+								
+	                               ?>
+								<tr value="getNewId();" class="d-none">
+									<td><input onclick="clearText(this); return false;" style="width: 50px; text-align: center; font-size:7pt; word-wrap: break-word;" type="button" value="クリア"></td>
+									<td><input name="groupnm" style="width: 865px; text-align: left;" type="text" value=""></td>
+									<td><input name="groupoder" style="width: 100px; text-align: right;" type="number" value=""></td>
 									<td><div style="width: 50px; text-align: center;">1篁�</div></td>
 									<td><button onclick="onEditItem(this);return false;" style="width: 100px; text-align: center;  word-wrap: break-word;" type="text">営業所選択</button></td>
 								</tr>
+								</tbody>
 								</table>
 						</form>
 					</div>
@@ -62,16 +75,11 @@
 			</div>
 		</div>
 		<footer id="footer">
-			<div class="float-right">更新日時 ： 2018/06/29 10:22:52   更新者 ： 0003
-				  TIEN-TT</div>
+			<div class="float-right">更新日時 ：  <?php echo date('Y/m/d H:i:s');?>  更新者 ： 0003 TIEN-TT</div>
 		</footer>
 	</div>
-	<!-- 	<form name="form1" method="post" action="#" id="form1"></form> -->
-	<!-- --jquery, bootstrap-- -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<script type="text/javascript">
 	var arrGroupId = [];
 	var originArrGroupId;
@@ -251,8 +259,7 @@
 		return true;
 	}
 	//Child window
-	function closeWin(){
-		
+	function closeWin(){	
 		if(myWin)
 			myWin.close();
 	}
@@ -301,20 +308,5 @@
 	window.location.href = 'index.php?groupflg='+groupflg;
 }
 	</script>
-
-
-<div id="lbdictex_find_popup" class="lbexpopup hidden" style="position: absolute; top: 0px; left: 0px;">
-<div class="lbexpopup_top">
-<h2 class="fl popup_title">&nbsp;</h2>
-<ul>
-<li><a class="close_main popup_close" href="#">&nbsp;</a></li>
-</ul>
-<div class="clr"></div>
-</div>
-<div class="popup_details"></div>
-<div class="popup_powered">abc</div>
-</div>
-<div id="lbdictex_ask_mark" class="hidden" style="position: absolute; top: 0px; left: 0px;">
-<a class="lbdictex_ask_select" href="#">&nbsp;</a></div>
 </body>
 </html>
