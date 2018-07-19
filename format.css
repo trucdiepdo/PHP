@@ -1,111 +1,79 @@
-@charset "UTF-8";
-* {
-	   box-sizing: border-box;
-	}
-	body {
-	   padding-left: 20px;
-	   padding-right: 20px;
-	   font-size: 13px;
-	   margin: 5px;
-	   background-color: #EFEFEF;
-	   height: 100%;
-	   max-width: 1250px;
-	   display: block;
-	}
-	#main {
+body {
+	padding-left: 20px;
+	padding-right: 20px;
+	font-size: 10pt;
+	margin: 5px;
+	font-family: 'ＭＳ ゴシック';
+	background-color: #EFEFEF;
+	max-width: 1250px;
+}
+
+#main {
 	min-height: 100%;
-	}
-	#body {
+}
+
+#body {
 	padding: 10px;
-	padding-bottom: 80px; /* Height of the footer */
-	}	
-	table {
-	   border-collapse: collapse;
-	   display: table;
-	   border-spacing: 2px;
-	   border-color: grey;
-	}
-	thead {
-    display: table-header-group;
-    vertical-align: middle;
-    border-color: inherit;
-     }
-	tbody {
-    display: table-row-group;
-    vertical-align: middle;
-    border-color: inherit;
-    }
-    th {
+	padding-bottom: 80px;
+	/* Height of the footer */
+}
+
+#footer {
+	position: absolute;
+	width: 100%;
+	height: 60px;
+	background: #EFEFEF;
+	padding-right: 50px;
+	max-width: 1245px;
+}
+
+th {
 	text-align: center;
-	}
-	th, td {
-	   display: table-cell;
-	   vertical-align: inherit;
-	}
-	td.b-none {
-    border: 0px;
-    }
-	td {
-    border: 1px solid black;
-    }
-    tr:nth-child(odd) {
-    background-color: white;
-    }
-    tr:nth-child(even) {
-    background-color: #bbddff;
-       }
-	.table-bordered {
-	   border: 2px solid black;
-	}
-	.table td {
-	   border-top: 2px solid black;
-	   text-align: center;
-	   }
-	 .d-inline {
-	   display: inline!important;
-	 }
-	 #GroupOffice {
+}
+
+#btnUpdate {
+	background-image: url("http://172.16.3.82:8082/assets/img/ExecBtnOrg.png");
+	text-align: center;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	padding: 2px 20px;
+}
+
+#btnClose {
+	background-image: url("http://172.16.3.82:8082/assets/img/ExecBtnPur.png");
+	text-align: center;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	padding: 2px 20px;
+}
+
+.table-bordered td {
+	padding: 0px;
+}
+
+td {
+	border: 1px solid black;
+}
+
+.table td {
+	border-top: 2px solid black;
+	text-align: center;
+}
+
+#GroupOffice {
 	margin-top: 5px;
-	}
-	 #GroupOffice table>thead th {
-        color: #000000;
-        background-color: #bbddff;
-        border: solid 1px darkgray;
-    }
-    #GroupOffice table>thead th {
+}
+
+td.b-none {
+	border: 0px;
+}
+
+#GroupOffice table>thead th {
 	color: #000000;
 	background-color: #bbddff;
 	border: solid 1px darkgray;
-	}
-	#btnUpdate {
-        background-image: url("http://172.16.3.82:8082/assets/img/ExecBtnOrg.png");
-        text-align: center;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        padding: 2px 20px;
-       }
-    #btnClose {
-        background-image: url("http://172.16.3.82:8082/assets/img/ExecBtnPur.png");
-        text-align: center;
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        padding: 2px 20px;
-        }
-    a {
-        color: black;
-    }
-    a:hover {
-        color: #0056b3;
-        text-decoration: underline;
-    }
-    #footer {
-        position: absolute;
-        width: 100%;
-        height: 60px;
-        background: #EFEFEF;
-        padding-right: 50px;
-        max-width: 1245px;
-    }
-    .float-right {
-    float: right!important;
-    }
+}
+
+tr.highlight {
+	background-color: #ffe7a0;
+}
