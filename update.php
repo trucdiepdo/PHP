@@ -1,132 +1,114 @@
-
-
+<?php
+include 'connect_postgresql.php';
+?>
 <!DOCTYPE html>
 <html lang="ja-jp">
 <head>
-	<title>グループ一覧</title>
-	<meta http-equiv="Content-Language" content="ja">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<link rel="stylesheet" href="format.css">
-	<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
-	<script type="text/javascript">
-
-	</script>
+    <title>グループ一覧</title>
+    <meta http-equiv="Content-Language" content="ja">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="format.css">
+    <script type="text/javascript" src="jquery.min.js"></script>
 </head>
 <body>
-	<div id="main">
-		<div id="body">
-			<div>
-				<table class="title titleGroupOffice">
-					<tbody>
-						<tr style="background-color: transparent">
-							<td class="formTitle b-none " style="width: 1030px;"><span id="lblTitle"><b>グループ一覧</b></span></td>
-							<td class="btnGoto_Orange b-none" width="170px">
+    <div id="main">
+        <div id="body">
+            <div>
+                <table class="title titleGroupOffice">
+                    <tbody>
+                        <tr style="background-color: transparent">
+                            <td class="formTitle b-none " style="width: 1030px;"><span id="lblTitle"><b>グループ一覧</b></span></td>
+                            <td class="btnGoto_Orange b-none" width="170px">
+                                <form class="d-inline" method="post">
+                                    <input type="button" id="btnUpdate" name="update" onclick="submitData()" tabindex="1" style="width: 70px;height: 24px;border: none;" value="更新">
+                                    <input type="button" name="close" id="btnClose" onclick="onBack()" tabindex="2" style="width: 80px;height: 24px;border: none;" value="閉じる">
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br> <br>
+            <button onclick="setMark()" type="button" class="btn btn-outline-secondary btn-sm">再付番</button>
+            <button onclick="addRow()" type="button" class="btn btn-outline-secondary btn-sm">行追加</button>
+            <button onclick="insertRow()" type="button" class="btn btn-outline-secondary btn-sm">行挿入</button>
+            <button onclick="deleteRow()" type="button" class="btn btn-outline-secondary btn-sm">行削除</button>
+            <!--     Show -->
+            <div id="GroupOffice">
+                <div id="GroupOfficeList">
+                    <div id="UpdPlGroupOfficeList">
+                        <form id="formInfo" action="#" method="post">
+                            <table id="infoTable">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50px;"></th>
+                                        <th style="width: 865px;">グループ名</th>
+                                        <th style="width: 100px;">表示順</th>
+                                        <th style="width: 150px;" colspan="2">所属営業所</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="groupInforResults">
+                                <?php
+                                if (isset($_GET)) {
+                                $groupflg    = $_GET['groupflg'];
+                                $result = pg_query($db, 'SELECT "M_GROUP"."GROUP_NM", "M_GROUP"."GROUP_ORDER", "M_GROUP"."DEL_FLG", COUNT( "M_GROUP_OFFICE"."OFFICE_CD" ) AS "DEM", "M_GROUP"."GROUP_ID"
+                                                            FROM PUBLIC."M_GROUP" left JOIN PUBLIC."M_GROUP_OFFICE" 
+                                                            ON "M_GROUP"."GROUP_FLG" = "M_GROUP_OFFICE"."GROUP_FLG" AND "M_GROUP"."GROUP_ID" = "M_GROUP_OFFICE"."GROUP_ID"
+                                                            WHERE "M_GROUP"."GROUP_FLG" = \'' . $groupflg . '\' AND "M_GROUP"."DEL_FLG" = \'0\'
+                                                            GROUP BY "M_GROUP"."GROUP_NM", "M_GROUP"."GROUP_ORDER", "M_GROUP"."DEL_FLG",  "M_GROUP"."GROUP_ID"
+                                                            ORDER BY "M_GROUP"."GROUP_ORDER"');
+                                while ($row = pg_fetch_row($result)) {
+                                echo "<tr value='$row[4]'>
+                                             <td style=\"height: 47px;\"><input onClick=\"clearText(this); return false;\" style=\"width: 50px; text-align: center; font-size:7pt; word-wrap: break-word;\" type=\"button\" value=\"クリア\"></td>
+                                             <td><input name= \"groupnm\" style=\"width: 865px; text-align: left;\" type=\"text\" value=\"$row[0]\"></td>
+                                             <td><input name= \"groupoder\" style=\"width: 100px; text-align: right;\" type=\"number\" value=\"$row[1]\"></td>
+                                             <td><div style=\"width: 50px; text-align: center;\" >$row[3]件</div></td>
+                                             <td><button onClick=\"onEditItem(this);return false;\" style=\"width: 100px; text-align: center;\" type=\"text\">営業所選択</button></td>
+                                      </tr>";
+                                    }
+                            
+                                   }
+                                   if(isset($_POST['update'])){
+                                       $groupid = $_POST['value']; 
+                                       $groupnm = $_POST['groupnm'];
+                                       $grouporder = $_POST['groupoder'];
+                                   
+                                       $sql = 'insert into public."M_GROUP" ("GROUP_ID", "GROUP_NM", "GROUP_ORDER") values (\''.$groupid.'\',\''.$groupnm.'\,\''.$grouporder.'\')';
+                                       $res = pg_query($db,$sql);
+                                   }
+                                   ?>
+                               </tbody>
+                                </table>
+                        </form>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+        <footer id="footer">
+            <div class="float-right">更新日時 ：  <?php echo date('Y/m/d H:i:s'); ?>  更新者 ： 0003 TIEN-TT</div>
+        </footer>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script type="text/javascript">
 
-								<div id="UpdPlBtnUpdate" class="d-inline">
-									<a id="btnUpdate" href="#" onclick="submitData()" tabindex="1">更新</a>
-								</div>
-								<div id="UpdPlBtnClose" class="d-inline">
-									<a id="btnClose" onclick="onBack()" tabindex="2" href="#">閉じる</a>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<br> <br>
-			<button onclick="setMark()" type="button" class="btn btn-outline-secondary btn-sm">再付番</button>
-			<button onclick="addRow()" type="button" class="btn btn-outline-secondary btn-sm">行追加</button>
-			<button onclick="insertRow()" type="button" class="btn btn-outline-secondary btn-sm">行挿入</button>
-			<button onclick="deleteRow()" type="button" class="btn btn-outline-secondary btn-sm">行削除</button>
-			<!-- 	Show -->
-			<div id="GroupOffice">
-				<div id="GroupOfficeList">
-					<div id="UpdPlGroupOfficeList">
-						<form id="formInfo" action="#">
-							<table id="infoTable">
-								<thead>
-									<tr>
-										<th style="width: 50px;"></th>
-										<th style="width: 865px;">グループ名</th>
-										<th style="width: 100px;">表示順</th>
-										<th style="width: 150px;" colspan="2">所属営業所</th>
-									</tr>
-								</thead>
-								<tbody id="groupInforResults">
-								<?php
-if(isset($_GET)) {
-    $db = pg_connect("host=localhost port=5432 dbname=training user=postgres password=have@tript0Singapore");
-    $q = $_GET['groupflg'];
-    $res2 = pg_query($db, 'SELECT
-	"M_GROUP"."GROUP_ID",
-	"M_GROUP"."GROUP_NM",
-	"M_GROUP"."GROUP_ORDER",
-	"M_GROUP"."DEL_FLG",
-	COUNT( "M_GROUP_OFFICE"."OFFICE_CD" ) AS "DEM"
-FROM
-	PUBLIC."M_GROUP"
-	left JOIN PUBLIC."M_GROUP_OFFICE" ON "M_GROUP"."GROUP_FLG" = "M_GROUP_OFFICE"."GROUP_FLG"
-	AND "M_GROUP"."GROUP_ID" = "M_GROUP_OFFICE"."GROUP_ID"
-WHERE
-	"M_GROUP"."GROUP_FLG" = \''.$q.'\'
-GROUP BY
-	"M_GROUP"."GROUP_ID",
-	"M_GROUP"."GROUP_NM",
-	"M_GROUP"."GROUP_ORDER",
-	"M_GROUP"."DEL_FLG"
-ORDER BY
-	"M_GROUP"."GROUP_ORDER"');
-    
-    
-    while($row = pg_fetch_row($res2)){
-        echo
-        "<tr id-get-office='$row[0]'>
-            <td></td>
-			<td style='text-align: left; word-wrap: break-word;'>$row[1]</td>
-			<td style='text-align: center;'>$row[2]</td>
-			<td style='text-align: center;'>$row[3]</td>
-				<td style='text-align: right;'>$row[4]</td>
-				</tr>";
-    }
-}?>
-								<tr value="getNewId();" class="d-none">
-									<td><input onclick="clearText(this); return false;" style="width: 50px; text-align: center; font-size:7pt; word-wrap: break-word;" type="button" value="クリア"></td>
-									<td><input name="groupnm" style="width: 865px; text-align: left;" type="text" value=""></td>
-									<td><input name="groupoder" style="width: 100px; text-align: right;" type="number" value=""></td>
-									<td><div style="width: 50px; text-align: center;">1篁�</div></td>
-									<td><button onclick="onEditItem(this);return false;" style="width: 100px; text-align: center;  word-wrap: break-word;" type="text">営業所選択</button></td>
-								</tr>
-								</tbody>
-								</table>
-						</form>
-					</div>
-				</div>
-				<br>
-			</div>
-		</div>
-		<footer id="footer">
-			<div class="float-right">更新日時 ：  <?php echo date('Y/m/d H:i:s');?>  更新者 ： 0003 TIEN-TT</div>
-		</footer>
-	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-	<script type="text/javascript">
 	var arrGroupId = [];
 	var originArrGroupId;
 	var groupflg=get_param('groupflg');
 
-	$( document ).ready(function() {
-	    var url ="ajax/get_update_info_group.php?groupflg="+groupflg;
-	    $.get( url, function( data ) {
-			$( "#groupInforResults" ).html( data );
-			$( "#infoTable tbody tr" ).each(function( index, element ){
-				arrGroupId.push($(this).attr('value'));
-			});
-			originArrGroupId=arrGroupId.slice();
-			console.log(originArrGroupId);
-		});
+// 	$( document ).ready(function() {
+// 	    var url ="ajax/get_update_info_group.php?groupflg="+groupflg;
+// 	    $.get( url, function( data ) {
+// 			$( "#groupInforResults" ).html( data );
+// 			$( "#infoTable tbody tr" ).each(function( index, element ){
+// 				arrGroupId.push($(this).attr('value'));
+// 			});
+// 			originArrGroupId=arrGroupId.slice();
+// 			console.log(originArrGroupId);
+// 		});
 		
-	});
+// 	});
 	$('#infoTable').on('click', 'tbody tr', function(event) {
 		  $(this).addClass('highlight').siblings().removeClass('highlight');
 		});
@@ -185,7 +167,7 @@ ORDER BY
 	var deletedOfficed =[];
 	function deleteRow() {
 		var value = $(".selected").attr('value');
-		if( value !==undefined){
+		if( value !== undefined){
 			deletedOfficed.push(value);
 		}
 		$(".selected").remove();
@@ -272,7 +254,7 @@ ORDER BY
 			};
 		$.ajax({
 			  type: "POST",
-			  url: "ajax/submit_form2.php",
+			  url: "index.php",
 			  data: {myData: dataSend, GroupFlg:  groupflg, Remove: deletedOfficed},
 			  success: function(msg){ 
 				  console.log('Data Sent' +msg);
@@ -289,7 +271,8 @@ ORDER BY
 		return true;
 	}
 	//Child window
-	function closeWin(){	
+	function closeWin(){
+		
 		if(myWin)
 			myWin.close();
 	}
@@ -309,7 +292,7 @@ ORDER BY
 	function updateGroupOffice(data){
 		$.ajax({
 			  type: "POST",
-			  url: "ajax/update_group_office.php",
+			  url: "index.php",
 			  data: {myData: data},
 			  success: function(msg){ 
 				  console.log('Data Sent12' +msg);
@@ -329,14 +312,14 @@ ORDER BY
 			arrGroupId.push(tmpId);
 		return tmpId;
 		};
-//Mark the changed row to submit
+	//Mark the changed row to submit
 	$('#groupInforResults').on('change', 'input', function(){
 		$(this).parent().parent().addClass('changed');
-});
+	});
 
 	function onBack(){
-	window.location.href = 'index.php?groupflg='+groupflg;
-}
-	</script>
+		window.location.href = 'index.php?groupflg='+groupflg;
+	}
+    </script>
 </body>
 </html>
