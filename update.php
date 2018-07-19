@@ -94,7 +94,7 @@ include 'connect_postgresql.php';
     <script type="text/javascript">
 
 	var arrGroupId = [];
-	var originArrGroupId;
+	var originArrGroupId=[];
 	var groupflg=get_param('groupflg');
 
 // 	$( document ).ready(function() {
@@ -229,7 +229,6 @@ include 'connect_postgresql.php';
 			var groupId = $(this).attr('value');
 			var child1=$($(this).children()[1]).children().val();
 			var child2=$($(this).children()[2]).children().val();
-
 // 			check empty fill
 			if(!child1 || !child2)
 			{
@@ -244,7 +243,6 @@ include 'connect_postgresql.php';
 						GroupOrder :child2,
 						IsNew : isNew
 					};
-		
 			dataSend.push(item);
 		});
 		
@@ -254,7 +252,7 @@ include 'connect_postgresql.php';
 			};
 		$.ajax({
 			  type: "POST",
-			  url: "index.php",
+			  url: "sendData.php",
 			  data: {myData: dataSend, GroupFlg:  groupflg, Remove: deletedOfficed},
 			  success: function(msg){ 
 				  console.log('Data Sent' +msg);
@@ -262,10 +260,11 @@ include 'connect_postgresql.php';
 			  },
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
 				 
-			     //alert("some error1"+XMLHttpRequest +textStatus+errorThrown);
+// 			     alert("some error1"+XMLHttpRequest +textStatus+errorThrown);
 			     console.log(textStatus);
 			     return false;
 			  }
+			 
 			});
 // 		window.location.href = 'index.php';
 		return true;
