@@ -51,7 +51,7 @@ include 'connect_postgresql.php';
                                 <?php
                                 if (isset($_GET)) {
                                 $groupflg    = $_GET['groupflg'];
-                                $result = pg_query($db, 'SELECT "M_GROUP"."GROUP_NM", "M_GROUP"."GROUP_ORDER", "M_GROUP"."DEL_FLG", COUNT( "M_GROUP_OFFICE"."OFFICE_CD" ) AS "DEM", "M_GROUP"."GROUP_ID"
+                                $result = pg_query('SELECT "M_GROUP"."GROUP_NM", "M_GROUP"."GROUP_ORDER", "M_GROUP"."DEL_FLG", COUNT( "M_GROUP_OFFICE"."OFFICE_CD" ) AS "DEM", "M_GROUP"."GROUP_ID"
                                                             FROM PUBLIC."M_GROUP" left JOIN PUBLIC."M_GROUP_OFFICE" 
                                                             ON "M_GROUP"."GROUP_FLG" = "M_GROUP_OFFICE"."GROUP_FLG" AND "M_GROUP"."GROUP_ID" = "M_GROUP_OFFICE"."GROUP_ID"
                                                             WHERE "M_GROUP"."GROUP_FLG" = \'' . $groupflg . '\' AND "M_GROUP"."DEL_FLG" = \'0\'
@@ -60,22 +60,14 @@ include 'connect_postgresql.php';
                                 while ($row = pg_fetch_row($result)) {
                                 echo "<tr value='$row[4]'>
                                              <td style=\"height: 47px;\"><input onClick=\"clearText(this); return false;\" style=\"width: 50px; text-align: center; font-size:7pt; word-wrap: break-word;\" type=\"button\" value=\"クリア\"></td>
-                                             <td><input name= \"groupnm\" style=\"width: 865px; text-align: left;\" type=\"text\" value=\"$row[0]\"></td>
+                                             <td><input name= \"groupnm\" style=\"width: 865px; text-align: left;\" type=\"text\" value=\"".trim($row[0])."\"></td>
                                              <td><input name= \"groupoder\" style=\"width: 100px; text-align: right;\" type=\"number\" value=\"$row[1]\"></td>
                                              <td><div style=\"width: 50px; text-align: center;\" >$row[3]件</div></td>
                                              <td><button onClick=\"onEditItem(this);return false;\" style=\"width: 100px; text-align: center;\" type=\"text\">営業所選択</button></td>
                                       </tr>";
                                     }
                             
-                                   }
-                                   if(isset($_POST['update'])){
-                                       $groupid = $_POST['value']; 
-                                       $groupnm = $_POST['groupnm'];
-                                       $grouporder = $_POST['groupoder'];
-                                   
-                                       $sql = 'insert into public."M_GROUP" ("GROUP_ID", "GROUP_NM", "GROUP_ORDER") values (\''.$groupid.'\',\''.$groupnm.'\,\''.$grouporder.'\')';
-                                       $res = pg_query($db,$sql);
-                                   }
+                                   }                                  
                                    ?>
                                </tbody>
                                 </table>
@@ -212,6 +204,7 @@ include 'connect_postgresql.php';
 		           GroupFLG: groupflg
 		       };
 		console.log(sendInfo);
+		
 		updateGroupOffice(sendInfo);
 	}
 	function onEditItem(elem) {
@@ -220,9 +213,6 @@ include 'connect_postgresql.php';
 	}
 
 	function submitData(){
-		sendData();
-	}
-	function sendData(){
 		var dataSend = [];
 		var isNotValid =false;
 		$( "#infoTable tbody tr.changed" ).each(function( index, element ){
@@ -243,20 +233,22 @@ include 'connect_postgresql.php';
 						GroupOrder :child2,
 						IsNew : isNew
 					};
-			dataSend.push(item);
+			dataSend.push(item.GroupId,item.GroupNM,item.GroupOrder,item.IsNew);
+			
 		});
-		
+		alert(dataSend);
 		if(isNotValid) {
 			return false;
 			onBack();
 			};
 		$.ajax({
 			  type: "POST",
-			  url: "sendData.php",
+			  url: "getData.php",
 			  data: {myData: dataSend, GroupFlg:  groupflg, Remove: deletedOfficed},
 			  success: function(msg){ 
-				  console.log('Data Sent' +msg);
-				  onBack();
+				  alert(msg);
+// 				  console.log('Data Sent' +msg);
+// 				  onBack();
 			  },
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
 				 
@@ -271,23 +263,22 @@ include 'connect_postgresql.php';
 	}
 	//Child window
 	function closeWin(){
-		
 		if(myWin)
 			myWin.close();
 	}
-	function onResults( data){
-		 $( "#groupInforResults tr" ).each(function( index, element ) {
-			   if( $(this).attr('value') == data['GroupId']){
-				   var countOffices =data['OfficeCds'].length;
-				   var child=$(this).children()[3];
-				   $(child).children().html(countOffices+'件');
-				   updateGroupOffice(data);
-				   console.log("nhan");
-				   console.log(data);
-				   return false;
-				   }
-		});
-	}
+// 	function onResults(data){
+// 		 $( "#groupInforResults tr" ).each(function( index, element ) {
+// 			   if( $(this).attr('value') == data['GroupId']){
+// 				   var countOffices =data['OfficeCds'].length;
+// 				   var child=$(this).children()[3];
+// 				   $(child).children().html(countOffices+'件');
+// 				   updateGroupOffice(data);
+// 				   console.log("nhan");
+// 				   console.log(data);
+// 				   return false;
+// 				   }
+// 		});
+// 	}
 	function updateGroupOffice(data){
 		$.ajax({
 			  type: "POST",
