@@ -1,0 +1,16 @@
+// 	//Mark the changed row to submit
+// 	$('#groupInforResults').bind("DOMSubtreeModified",function(){
+// 	// add array groupId    
+// 		var $trs = $('#groupInforResults').find("tr");  
+// 		originArrGroupId = [];		
+// 		$.each($trs, function() {   
+// 		console.log($trs.children().find('input').html());
+// 		originArrGroupId.push($(this).attr('value'));  
+// 	});
+// 	});
+
+// 	var $row = $('#groupInforResults').closest("tbody"),      
+// 		$trs = $row.find("tr");            	
+// 		$.each($trs, function() {              
+// 			originArrGroupId.push($(this).attr('value'));  
+// 		});
