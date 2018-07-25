@@ -10,8 +10,9 @@ include 'connect_postgresql.php';
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="Pragma" content="no-cache">
     <link rel="stylesheet" href="style.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
+    
     $(document).ready(function(){
             var value= $('#ddlGroup option:selected').attr('value');
                 $.ajax({
@@ -28,6 +29,7 @@ include 'connect_postgresql.php';
                 }    
             });
         });
+    
     $(function(){
             $("#ddlGroup").change(function(){
                 var value= $('#ddlGroup option:selected').attr('value');
@@ -64,50 +66,18 @@ include 'connect_postgresql.php';
                 $('#infoOfficeTable').on('click', 'tbody tr', function(event) {
                          $(this).css("background","#ffe7a0").siblings().css("background","");
                         });
-});
-        function onClickedUpdate(){
-            window.location.href = 'update.php?groupflg=' + $('#ddlGroup option:selected').val();
+	});
+
+	function onClickedUpdate(){
+        window.location.href = 'update.php?groupflg=' + $('#ddlGroup option:selected').val();
+    }
+    
+    function close_window() {
+        if (confirm("閉じる?")) {
+           close();
         }
-        function close_window() {
-              if (confirm("閉じる?")) {
-                close();
-              }
-            }
+    }
 
-//         $( document ).ready(function() {
-//     		if(get_param('groupflg'))
-//     			$( "#ddlGroup option" ).each(function( index, element ) {
-    		   		
-//     		   		if($(this).attr('value').trim() == get_param('groupflg')){
-//     		   		$(this).attr('selected','selected');
-//     		   		refeshInfoGroup(get_param('groupflg'));
-//     		   		return false;
-//     		   		}
-//     		  });
-//     		else{
-//     			var value = $("#ddlGroup option:first").val();
-//     			refeshInfoGroup(value);
-//     		}
-    	
-//     	});
-
-//         function get_param(param) {
-// 	        var vars = {};
-// 	        window.location.href.replace(location.hash, '').replace(
-// 	        /[?&]+([^=&]+)=?([^&]*)?/gi,
-// 	        function (m, key, value) { 
-// 	            vars[key] = value !== undefined ? value : '';
-// 	        }
-// 	    );
-// 	        return vars[param];
-// 	    }
-
-//         function refeshInfoGroup(value){
-//     		$.get( "ajax/getUse.php?groupflg="+value, function( data ) {
-//     			  $( "#groupInforResults" ).html( data );
-//     			  $( "#officeInGroupResults" ).html("");
-//     			});
-//     	}
         </script>
 </head>
 <body>
