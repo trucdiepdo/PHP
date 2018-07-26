@@ -15,11 +15,11 @@ while ($row = pg_fetch_row($result_kq)) {
 
  while ($row = pg_fetch_row($result)) {
      echo "<tr>";
-     if(strpos($chuoi, trim($row[1])) !== false) {
-         echo "<td><input type=\"checkbox\" checked></td>";
+     if(strpos($chuoi, trim($row[2])) !== false) {
+         echo "<td><input type=\"checkbox\" checked></td>" . $chuoi;
      }
      else {
-         echo "<td><input type=\"checkbox\"></td>";
+         echo "<td><input type=\"checkbox\"> </td>" . $chuoi;
      }
  									
 
