@@ -1,6 +1,7 @@
 <?php
 include 'connect_postgresql.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="ja-jp">
 <head>
@@ -13,6 +14,7 @@ include 'connect_postgresql.php';
 	
 </head>
 <body>
+<div id='div_session_write'> </div>
     <div id="main">
         <div id="body">
             <div>
@@ -249,17 +251,25 @@ include 'connect_postgresql.php';
 	}
 
 	function onResults(data){
+		var groupidtemp ='';
 		 $( "#groupInforResults tr" ).each(function( index, element ) {
 			   if( $(this).attr('value') == data['GroupId']){
 				   var countOffices = data['OfficeCds'].length;
 				   var child=$(this).children()[3];
 				   $(child).children().html(countOffices+'件');
 				   updateGroupOffice(data);
-				   console.log("nhan");
+				   console.log("nhan: "+ ''+'session_'+data['GroupId']+'-'+data['GroupFLG']);
 				   console.log(data);
 				   return false;
 				   }
+				 
 		});
+		 groupidtemp = data.OfficeCds;
+		 $.post("sessionPHP_write.php", { "session_name": ''+'session_'+data['GroupId']+'-'+data['GroupFLG'], "session_value": groupidtemp.toString()
+		 });
+		 $.post("sessionPHP_write.php", { "session_name": ''+'sessions_'+data['GroupId']+'-'+data['GroupFLG'], "session_value": data['OfficeCds'].length
+		 });
+		//sessionStorage.setItem(''+'session_'+data['GroupId']+'-'+data['GroupFLG'], data.OfficeCds);
 	}
 
 	function updateGroupOffice(data){

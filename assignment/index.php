@@ -1,5 +1,7 @@
 <?php
 include 'connect_postgresql.php';
+session_start();
+    session_unset();
 ?>
 <!DOCTYPE html>
 <html lang="ja-jp">
