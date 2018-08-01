@@ -17,12 +17,16 @@ if(isset($_POST) || isset($_SESSION["myData"])){
         pg_query("BEGIN") or die("Transaction commit failed\n");
         try {
             foreach($data as $key=>$value){
+                
+                // Add new row
                 if(isset($value["IsNew"]) && $value["IsNew"] == 1){
                     
                     // Add & insert row
                     $sql_insert = 'insert into public."M_GROUP" ("GROUP_ID", "GROUP_NM", "GROUP_ORDER","GROUP_FLG", "DEL_FLG") values (\''.$value["GroupId"].'\',\''.$value["GroupNM"].'\',\''.$value["GroupOrder"].'\',\''.$groupflg.'\',\''.$delflg.'\')';
                     $res_insert = pg_query($sql_insert);
                 }
+                
+                // Edit date of row
                 if(isset($value["IsNew"]) && $value["IsNew"] == 0){
                     
                     // Update
@@ -81,6 +85,11 @@ if(isset($_POST) || isset($_SESSION["myData"])){
     pg_query("BEGIN") or die("Could not start transaction\n");
     
     try {
+         
+        /*
+         * If checked row --> delete --> insert 
+         * If unchecked row --> insert directly
+         */ 
         $sql_delete_session = 'delete from public."M_GROUP_OFFICE" where "GROUP_ID" = \''.$groupId.'\' and "GROUP_FLG" = \''.$groupFlg.'\'';
         $res_delete_session = pg_query($sql_delete_session);
         
