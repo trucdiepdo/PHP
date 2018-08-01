@@ -9,9 +9,6 @@ include 'connect_postgresql.php';
     <meta http-equiv="Content-Language" content="ja">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="format.css">
-   
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	
 </head>
 <body>
 <div id='div_session_write'> </div>
@@ -52,7 +49,6 @@ include 'connect_postgresql.php';
                                     </tr>
                                 </thead>
                                 <tbody id="groupInforResults">
-                                
                                </tbody>
                                 </table>
                         </form>
@@ -62,12 +58,15 @@ include 'connect_postgresql.php';
             </div>
         </div>
         <footer id="footer">
-            <div class="float-right">更新日時 ：  <?php echo date('Y/m/d H:i:s'); ?>  更新者 ： 0003 TIEN-TT</div>
+            <div class="float-right">更新日時 ：  <?php echo date('Y/m/d H:i:s'); ?>  更新者 ： 4077 DIEP-DTT</div>
         </footer>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript">
+    
 	var originArrGroupId = [];
 	var arrGroupId = [];
 	var groupflg=get_param('groupflg');
@@ -82,11 +81,13 @@ include 'connect_postgresql.php';
 				originArrGroupId=arrGroupId.slice();
 				console.log(originArrGroupId);
 			});
-			
 		});
+
+	// Highlight selected row
 	$('#infoTable').on('click', 'tbody tr', function(event) {
 		  $(this).addClass('highlight').siblings().removeClass('highlight');
 		});
+	
     function get_param(param) {
         var vars = {};
         window.location.href.replace(location.hash, '').replace(
@@ -97,6 +98,7 @@ include 'connect_postgresql.php';
     );
         return vars[param];
     }
+    
 	function close_window() {
 		  if (confirm("閉じる?")) {
 		    close();
@@ -111,8 +113,8 @@ include 'connect_postgresql.php';
 			    $( this).parent().addClass("changed");
 			  });
 	}
+	
 	function addRow() {
-		
 		var txt = document.createElement("tr");
 	    var txtChild ="<td><input onClick=\"clearText(this); return false;\" style=\"width: 50px; text-align: center; font-size:7pt; word-wrap: break-word;\" type=\"button\" value=\"クリア\"></td>";
 		txtChild += "<td ><input name= \"groupnm\" style=\"width: 865px; text-align: left;\" type=\"text\" value=\"\"></td>";
@@ -123,6 +125,7 @@ include 'connect_postgresql.php';
 		$(txt).attr('value',getNewId());
 		$("#groupInforResults").append(txt);
 	}
+	
 	function insertRow() {
 		var txt = document.createElement("tr");
 		var txtChild ="<td><input onClick=\"clearText(this); return false;\" style=\"width: 50px; text-align: center; font-size:7pt; word-wrap: break-word;\" type=\"button\" value=\"クリア\"></td>";
@@ -131,16 +134,16 @@ include 'connect_postgresql.php';
 			txtChild += "<td ><div style=\"width: 50px; text-align: center;\" >0件</div>";
 			txtChild += "<td ><button onClick=\"onEditItem(this);return false;\" style=\"width: 100px; text-align: center;\" type=\"text\">営業所選択</button></td>";
 		txt.innerHTML =txtChild;
-		
 		$(txt).attr('value',getNewId());
 		if($(".selected").length)
 			$(".selected").after(txt);
 		else
 			$("#groupInforResults").prepend(txt) ;  
-// 			alert('hihi');
 	}
 	
 	var deletedOfficed =[];
+
+	// Function delete the selected row
 	function deleteRow() {
 		var value = $(".selected").attr('value');
 		if( value !== undefined){
@@ -148,17 +151,17 @@ include 'connect_postgresql.php';
 		}
 		$(".selected").remove();
 	}
-   
+
+	// Highlight selected row
 	$('#infoTable').on('click', 'tbody tr', function(event) {
 		  $(this).addClass('selected').siblings().removeClass('selected');
 		  $(this).addClass('changed');
 		});
+	
 	var myWin;
 	function OpenPop(url) {
-
 	    var mainWitdth;    
 	    var mainHeight;    
-	   
 	    if (screen.availWidth >= 1366) {  
 	        mainWitdth = 1366;
 	        mainHeight = 768;
@@ -167,7 +170,6 @@ include 'connect_postgresql.php';
 	        mainWitdth = screen.availWidth;
 	        mainHeight = screen.height;	
 	    }
-	    
 	    var str_style = "titlebar=no, toolbar=no, location=no, directories=no," +
 	                  "menubar=no, resizable=yes, status=yes, scrollbars=no," +
 	                  "top=0, left=0";
@@ -191,6 +193,7 @@ include 'connect_postgresql.php';
 		
 		updateGroupOffice(sendInfo);
 	}
+	
 	function onEditItem(elem) {
 		var groupid =$(elem).parent().parent().attr('value');
 		OpenPop('show.php?groupid='+groupid+'&groupflg='+ groupflg);
@@ -203,7 +206,8 @@ include 'connect_postgresql.php';
 			var groupId = $(this).attr('value');
 			var child1=$($(this).children()[1]).children().val();
 			var child2=$($(this).children()[2]).children().val();
-// 			check empty fill
+
+			// Check empty information
 			if(!child1 || !child2)
 			{
 				alert('エラー');
@@ -218,28 +222,26 @@ include 'connect_postgresql.php';
 						IsNew : isNew
 					};
 			dataSend.push(item);
-			
 		});
+		
 		if(isNotValid) {
 			return false;
 			onBack();
 			};
+			
 		$.ajax({
 			  type: "POST",
 			  url: "getData.php",
 			  data: {myData: dataSend, GroupFlg:  groupflg, Remove: deletedOfficed},
 			  success: function(msg){ 
-				  alert(msg);
-				  console.log('Data Sent' +msg);
+// 				  alert(msg);
+				  console.log('Data Sent ' +msg);
 				  onBack();
 			  },
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
-				 
-// 			     alert("some error1"+XMLHttpRequest +textStatus+errorThrown);
 			     console.log(textStatus);
 			     return false;
-			  }
-			 
+			  }			 
 			});
 		return true;
 	}
@@ -258,18 +260,17 @@ include 'connect_postgresql.php';
 				   var child=$(this).children()[3];
 				   $(child).children().html(countOffices+'件');
 				   updateGroupOffice(data);
-				   console.log("nhan: "+ ''+'session_'+data['GroupId']+'-'+data['GroupFLG']);
+				   console.log("nhan: "+ 'session_'+data['GroupId']+'-'+data['GroupFLG']);
 				   console.log(data);
 				   return false;
 				   }
 				 
 		});
 		 groupidtemp = data.OfficeCds;
-		 $.post("sessionPHP_write.php", { "session_name": ''+'session_'+data['GroupId']+'-'+data['GroupFLG'], "session_value": groupidtemp.toString()
+		 $.post("sessionPHP_write.php", {"session_name": 'session_'+data['GroupId']+'-'+data['GroupFLG'], "session_value": groupidtemp.toString()
 		 });
-		 $.post("sessionPHP_write.php", { "session_name": ''+'sessions_'+data['GroupId']+'-'+data['GroupFLG'], "session_value": data['OfficeCds'].length
+		 $.post("sessionPHP_write.php", {"session_name": 'sessions_'+data['GroupId']+'-'+data['GroupFLG'], "session_value": data['OfficeCds'].length
 		 });
-		//sessionStorage.setItem(''+'session_'+data['GroupId']+'-'+data['GroupFLG'], data.OfficeCds);
 	}
 
 	function updateGroupOffice(data){
@@ -278,15 +279,16 @@ include 'connect_postgresql.php';
 			  url: "update-group-office.php",
 			  data: {myData: data},
 			  success: function(msg){ 
-				  alert(msg);
-				  console.log('Data Sent12' +msg);
+// 				  alert(msg);
+				  console.log('Data Sent12 ' +msg);
 				  closeWin();
 			  },
 			  error: function(XMLHttpRequest, textStatus, errorThrown) {
-			     alert("some error2");
+			     alert("ERROR");
 			  }
 			});
 	}
+	
 	function getNewId(){
 		var $tmpId;
 		do{
@@ -300,14 +302,12 @@ include 'connect_postgresql.php';
 	//Mark the changed row to submit
 	$('#groupInforResults').on('change', 'input', function(){
 		$(this).parent().parent().addClass('changed');
-	// add array groupId	
+	// Add array groupId	
 	});
 
 	function onBack(){
 		window.location.href = 'index.php?groupflg='+groupflg;
-// 		window.history.back();
 	}
-	
     </script>
 </body>
 </html>
