@@ -1,8 +1,9 @@
 <?php
 include 'connect_postgresql.php';
 session_start();
-    session_unset();
+session_unset();
 ?>
+
 <!DOCTYPE html>
 <html lang="ja-jp">
 <head>
@@ -14,7 +15,8 @@ session_start();
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
-    
+
+    // Show data immediately when load page index.php
     $(document).ready(function(){
             var value= $('#ddlGroup option:selected').attr('value');
                 $.ajax({
@@ -31,7 +33,8 @@ session_start();
                 }    
             });
         });
-    
+
+    // Show information with each "GROUP_FLG"
     $(function(){
             $("#ddlGroup").change(function(){
                 var value= $('#ddlGroup option:selected').attr('value');
@@ -50,8 +53,12 @@ session_start();
                 });
                     $('#officeInGroupResults').html('');
             });
+
+        	// Highlight selected row
                  $('#infoTable').on('click', 'tbody tr', function(event) {
                    $(this).css("background","#ffe7a0").siblings().css("background","");
+
+                   			// Get "GROUP_ID" & "GROUP_FLG" to connect table 1 & 2
                             $.ajax({
                             method:'POST',
                             url:"getOffice.php",
@@ -65,21 +72,24 @@ session_start();
                             }    
                         });
                     });
+
+              // Highlight selected row
                 $('#infoOfficeTable').on('click', 'tbody tr', function(event) {
                          $(this).css("background","#ffe7a0").siblings().css("background","");
                         });
 	});
 
+	// Move to update.php
 	function onClickedUpdate(){
         window.location.href = 'update.php?groupflg=' + $('#ddlGroup option:selected').val();
     }
-    
+
+    // Close window
     function close_window() {
         if (confirm("閉じる?")) {
            close();
         }
     }
-
         </script>
 </head>
 <body>
@@ -111,10 +121,10 @@ session_start();
                             <td>
                                 <select name="ddlGroup" id="ddlGroup" style="width: 230px">
                                     <?php
-                                    $active = $_GET['groupflg']?$_GET['groupflg']:'1';
                                     
-                                    $result = pg_query('select distinct "GROUP_FLG" from public."M_GROUP" 
-                                                             order by "GROUP_FLG"');
+                                    // Table 1 in index.php
+                                    $active = $_GET['groupflg']?$_GET['groupflg']:'1'; // Show information of "GROUP_FLG" selected before
+                                    $result = pg_query('select distinct "GROUP_FLG" from public."M_GROUP" order by "GROUP_FLG"');
                                     while ($row = pg_fetch_row($result)) {
                                         echo "<option value ='$row[0]' ". ($active == trim($row[0])?'selected':'').">Use " . $row[0] . "</option>";
                                     }
@@ -126,8 +136,8 @@ session_start();
                 </table>
             </div>
             <br>
-            <!-- Show -->
             
+            <!-- Show information of table 1 and 2-->
             <div id="GroupOffice">
                 <div id="GroupOfficeList">
                     <div id="UpdPlGroupOfficeList">
@@ -146,7 +156,6 @@ session_start();
                         </div>
                     </div>
                 <br>
-            
                     <div id="GroupOfficeDetail">
                     <p>
                         <span id="lblInfoDetailGroup"><b>◆選択したグループに属する営業所情報</b></span>
@@ -155,8 +164,7 @@ session_start();
                         <table id="infoOfficeTable">
                             <thead>
                                 <tr>
-                                    <th style="width: 90px;">営業所<br> コード
-                                    </th>
+                                    <th style="width: 90px;">営業所<br> コード</th>
                                     <th style="width: 250px;">営業所名</th>
                                     <th style="width: 120px;">資格</th>
                                     <th style="width: 425px;">住所</th>
@@ -165,18 +173,16 @@ session_start();
                                 </tr>
                             </thead>
                             <tbody id="officeInGroupResults">
-                            
                             </tbody>
                         </table>
                     </div>
                 </div>
-                
             </div>
         </div>
         </div>
         <div id="tes-test"></div>
     <footer id="footer">
-            <div class="float-right">更新日時 ： <?php echo date('Y/m/d H:i:s'); ?> &emsp; 更新者 ： 0003 &emsp; TIEN-TT</div>
+            <div class="float-right">更新日時 ： <?php echo date('Y/m/d H:i:s'); ?> &emsp; 更新者 ： 4077 &emsp; DIEP-DTT</div>
         </footer>
 </body>
 </html>
