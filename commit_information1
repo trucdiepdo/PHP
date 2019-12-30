@@ -1,0 +1,34 @@
+					KHÁI QUÁT VỀ MÀN HÌNH THÔNG TIN COMMIT														
+																			
+	I. Giới thiệu về màn hình Thông tin commit: 																		
+		1. Định nghĩa:																	
+			Đây là màn hình có chức năng cập nhật tiến độ gồm: tổng số giờ thực hiện task, số trang thiết kế, số LOC, số testcase thực hiện task vào MS project và tự động điền các file theo từng phase vào Requirement Traceability Matrix.																
+			Giúp member có thể điền thông tin task ngay tại thư mục project.																
+		2. Hình ảnh giao diện																	
+																			
+																			
+																			
+																			
+																			
+																			
+																			
+																			
+																			
+																			
+																			
+																			
+																			
+																			
+																			
+																			
+																			
+																			
+																			
+			ModuleID	Sub, task cha															
+			PG_A	Sub A_Taskcha A															
+			PG_A1	Taskcha A															
+			PG_A	Sub B															
+			PG_B	Sub B															
+																			
+																			
+	
