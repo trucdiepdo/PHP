@@ -1,0 +1,49 @@
+III. Action View:																		
+		1. Trường hợp member commit có file																	
+			Tên schedule: 																
+				Tên schedule được load từ DB schedule ms project															
+				Ví dụ: TEST_QAPS_Project Schedule (DIEP-DTT)															
+			Show all tasks: 																
+				Uncheck: show những  ModuleID, TaskName chưa hoàn thành tiến độ 100%															
+				Check: show tất cả ModuleID, TaskName của member đó															
+			ModuleID: việc hiển thị sẽ chịu ảnh hưởng của Show all tasks																
+				Trường hợp task chỉ có duy nhất 1 ModuleID thì hiển thị Sub chứa ModuleID và ModuleID															
+				Trường hợp bị trùng ModuleID thì có thể xác định dựa vào Sub chứa ModuleID															
+				Trường hợp ModuleID bị rỗng thì vẫn hiển thị															
+				Trường hợp task chưa được lên schedule thì vị trí này để blank															
+			TaskName: hiển thị tất cả những task có ModuleID như đã chọn bên trên																
+				Khi chọn ModuleID là rỗng thì hiển thị tất cả các task có ModuleID rỗng															
+				Trường hợp task chưa được lên schedule thì vị trí này để blank															
+			TaskClass: hiển thị TaskClass tương ứng với TaskName mà PL đã lên																
+				Ví dụ: Coding ---> PG															
+				Testing 1 ---> TS1															
+				Trường hợp task chưa được lên schedule thì vị trí này là blank (do chưa chọn TaskName)															
+			Note: nhập thông tin ghi chú của task																
+				Ví dụ: Commit chức năng login															
+			Date: chọn ngày muốn commit tiến độ																
+			Effort & Actual Work:																
+				Trường hợp commit lần 1: 															
+					Effort: 1	Actual Work: 0													
+					Khi đó trong schedule hiển thị số giờ là: 1 + 0 = 1														
+				Trường hợp commit lần 2:															
+					Effort: 3	Actual Work: 1													
+					Khi đó trong schedule hiển thị số giờ là: 3 + 1 = 4														
+				Trường hợp muốn commit tổng số giờ thực hiện task trong ngày (lần 3):															
+					Effort: 0	Actual Work: 4 chuyển thành 6													
+					Khi đó trong schedule hiển thị số giờ là: 0 + 6 = 6														
+			LOC: chỉ cập nhật được khi TaskClass là PG																
+			LOC tham khảo	Hiển thị số LOC của PG tạo mới được commit lên SVN. Tool này sẽ tính số LOC dựa vào file trên SVN.															
+				Nếu thấy số liệu hợp lí thì member tự cập nhật lại tại LOC															
+			BaseLOC: member tự cập nhật BaseLOC đối với những file thuộc loại convert, customize. Chỉ cập nhật được khi TaskClass là PG																
+			Design page: member tự cập nhật số trang thiết kế, chỉ cập nhật được khi TaskClass là BD, DD, PG																
+			Testcase: member tự cập nhật số testcase, chỉ cập nhật được khi TaskClass là TST1, TST2,…																
+			List file: hiển thị tên file đã chọn commit																
+			Submit: 																
+				Đối với trường hợp chọn đầy đủ Tên schedule, ModuleID, TaskName thì tiến độ, thông tin số liệu sẽ được cập nhật trực tiếp lên server															
+				Đối với trường hợp chưa chọn ModuleID, TaskName thì thông tin sẽ được lưu tạm và review lại tại màn hình List task review trước khi submit lên server															
+		2. Trường hợp member muốn điền tiến độ và số liệu mà không commit file																	
+			Member vào thư mục dự án từ màn hình menu context																
+			Chuột phải tại thư mục project, phía dưới tab TortoiseSVN																
+			Show màn hình Thông tin Commit																
+			Hướng dẫn sử dụng tương tự trường hợp 1																
+			Riêng vị trí List file không hiển thị																
