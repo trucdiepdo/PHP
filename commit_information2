@@ -1,0 +1,36 @@
+II. Diễn giải các item trên màn hình:																		
+																			
+		STT	Tên Item	Type	Init	Chức năng													
+		1	Tên Schedule	Combobox	Blank	"Hiển thị tất cả schedule mà member đó tham gia, trình hiển thị tăng dần A-Z
+Có thể search "													
+		2	Show all tasks	Checkbox	Unchecked 	"- Nếu unchecked thì tại vị trí ModuleID show những task mà member chưa hoàn thành
+- Nếu checked thì tại vị trí ModuleID và TaskName show tất cả các task của member đó bao gồm: đã hoàn thành và chưa hoàn thành"													
+		3	ModuleID	Combobox	Blank & Disabled	"Load tất cả ModuleID tương ứng với member được assigned
+Đồng thời hiển thị những sub, Task cha chứa ModuleID đó, cho phép hiển thị cả những ModuleID có tên giống nhau
+Sau khi chọn tên Schedule thì vị trí này sẽ thao tác được
+Disable nếu schedule blank
+Có thể search"													
+		4	TaskName	Combobox	Blank & Disabled	"Hiển thị list tất cả các TaskName tưng ứng với ModuleID đã được chọn
+Sau khi chọn ModuleID thì vị trí này sẽ Enable
+Disable nếu schedule hoặc ModuleID blank
+Có thể search"													
+		5	TaskClass	lable	Blank	Vị trí này không thể thao tác được, sau khi chọn TaskName, giá trị TaskClass  = TaskClass mà PL đã lên cho member trong schedule													
+		6	Note	Input text	Blank	"TH 1: Có chọn schedule
+Nếu điền note thì sẽ lưu vào note của schedule tương ứng taskname đã chọn (Ví dụ: KH không yêu cầu TKCT, không tạo file UT...)
+TH 2: Không chọn schedule nào (member chưa có task trong schedule)
+Nếu điền note thì sẽ lưu vào DB tạm để review"													
+		7	Date	Date picker	Current date	Chọn ngày muốn commit 													
+		8	Effort	Input float (>=0) (giờ)	0	Nhập số giờ công thực hiện task													
+		9	Actual Work	Input float (>=0) (giờ)	0 hoặc Tổng giờ trước đó	"Hiển thị tổng số giờ công của task đang chọn đã điền lần trước
+Khi hover vào chỗ input sẽ hiện tooltip ""Tổng số giờ công của task đang chọn mà đã submit lần trước"""													
+		10	LOC tham khảo	Input integer	0	"Số LOC tham khảo (tính bằng tool mình tự đếm) đếm như thế nào
+Khi hover vào lable số LOC hiện tooltip ""LOC gợi ý được tính bằng tool Line of Code"""													
+		11	LOC	Input integer	0	Nhập số LOC													
+		12	BaseLOC	Input integer	0	Nhập số BaseLOC													
+		13	Design page	Input integer	0	Nhập số trang thiết kế													
+		14	Testcase	Input integer	0	Nhập số testcase													
+		15	List file	List	Chỉ hiển thị khi có file được commit	Hiển thị tên file đã được commit ở màn hình trước đó, những file này sẽ được cập nhật vào từng phase tương ứng trên RTM													
+		16	Submit	Button	Enabled	"Sau khi nhập đầy đủ dữ liệu cần thiết, click Submit để cập nhật data lên server
+Đối với task chưa được lên schedule (nghĩa là chưa chọn ModuleID, TaskName) sẽ được save ở bảng tạm."													
+																			
+	
