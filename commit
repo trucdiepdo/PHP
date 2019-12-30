@@ -1,0 +1,63 @@
+III. Các sự kiện trên màn hình:
+	a. Click combobox "Tên schedule":
+		- Hiển thị tất cả những schedule mà member đó tham gia theo thứ tự A-Z
+		- Trường hợp member đã chọn file để commit thì tại vị trí
+		này sẽ tự động map giữa thư mục project và tên schedule
+		- Có thể search 
+	b. Click checkbox "Show all tasks":
+		- Nếu unchecked thì tại vị trí TaskName chỉ hiển thị những task chưa hoàn thành
+		theo ModuleID đã chọn
+		- Nếu checked thì tại vị trí TaskName hiển thị tất cả các task
+		(bao gồm hoàn thành và chưa hoàn thành) theo ModuleID đã chọn
+	c. Click combobox "ModuleID":
+		- Chỉ enabled khi đã chọn Tên schedule
+		- Hiển thị tất cả ModuleID được chỉ định là member đó
+		Bao gồm ModuleID có giá trị là blank
+		- Có thể search
+	d. Click combobox "TaskName":
+		- Chỉ enabled khi đã chọn ModuleID
+		- Hiển thị tất cả TaskName được chỉ định là member đó
+		- Có thể search
+		- Validate bắt buộc chọn TaskName khi đã chọn ModuleID
+	e. Hiển thị của item TaskClass:
+		- Vị trí không thể thao tác, chỉ hiển thị
+		- Khi chọn TaskName, TaskClass sẽ map với cột TaskClass 
+		tương ứng mà PL đã lên trong schedule
+	f. Input textbox "Note":
+		- Nhập những thông tin về task đang làm
+		- Max length: 200 kí tự
+	g. Choose date picker "Date":
+		- Chọn ngày muốn cập nhật thông tin task
+	h. Input textbox "Effort":
+		- Nhập số giờ thực hiện task 
+	i. Input textbox "Actual Work":
+		- Get và hiển thị số giờ đã thực hiện task trước đó
+	j. Input textbox "LOC", "BaseLOC":
+		- Nếu TaskClass là PG thì enabled vị trí này.
+		- Nhập số dòng code
+		- Nếu TaskClass là blank thì disabled vị trí này
+	k. Input textbox "Design page":
+		- Nếu TaskClass là PG hoặc DD,BD thì enabled vị trí này.
+		- Nhập số trang thiết kế
+		- Nếu TaskClass là blank thì disabled vị trí này
+	l. Input textbox "Testcase":
+		- Nếu TaskClass là TS1 thì enabled vị trí này
+		- Nhập số testcase
+		- Nếu TaskClass là blank thì disabled vị trí này
+	m. Hiển thị "LOC tham khảo":
+		- Nếu TaskClass là PG thì tool Line of Code sẽ hiển thị số LOC để member tham khảo.
+	n. Hiển thị "List file":
+		- Khi di chuyển từ màn hình commit file, vị trí này sẽ hiển thị tất cả những file đã commit
+		và tự động cập nhật vào RTM theo từng phase dựa theo TaskClass.
+		- Trường hợp vào từ menu, sẽ không hiển thị tên file. 
+	o. Click button "Submit":
+		- Trường hợp TaskClass có giá trị
+		Click button Submit hiện dialog "Bạn có muốn cập nhật dữ liệu lên server?"
+		---> Đồng ý. Số liệu được cập nhật lên Ms Project, RTM
+		---> Hủy. Trở lại màn hình "Commit Information"
+		- Trường hợp TaskClass là blank 
+		Click button Submit hiện dialog "Bạn có muốn lưu dữ liệu vào bảng tạm?"
+		---> Đồng ý. Số liệu được lưu vào bảng tạm trong Database. 
+		Xem lại thông qua màn hình Review.
+		---> Hủy. Trở lại màn hình "Commit Information"
+		
