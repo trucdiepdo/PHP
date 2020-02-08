@@ -1,0 +1,21 @@
+1. Schedule Name:								
+	- Hiển thị combobox: tên schedule của project vừa mới commit file							
+		Danh sách Schedule Name lấy từ service của project server. Lấy danh sách tên các project schedule theo username (username lấy từ SVN). Chỉ lấy những schedule đang làm thông qua hàm get list schedule						
+	- Hiển thị ban đầu của combobox							
+		+ Trường hợp tại thư mục đã checkout source từ SVN và commit (cho cả trường hợp có file và không file)						
+				Hiển thị ban đầu: tên schedule lấy từ SVN				
+				Giá trị hiển thị của Schedule Name là tên schedule của project vừa mới commit file dựa theo đường dẫn tên dự án				
++ Trường hợp ngoài thư mục đã checkout source từ SVN và commit 				
+	Giá trị hiển thị của Schedule Name là blank 			
+	Trình hiển thị theo thứ tự tăng dần từ A-Z			
+	Có thể input kí tự để search và filter			
+	Khi Schedule Name là blank thì ModuleID, Task Name disabled. Khi Schedule Name khác blank thì Module ID và Task Name enabled			
+2. Show all tasks:				
+	- Trường hợp không check:			
+		+ Tại Module ID và TaskName hiển thị những task có % Work Complete < 100%		
+- Trường hợp check:							
+	+ Tại Module ID get tất cả các Module ID được assign cho member vừa mới commit file 						
+	+ Tại Task Name get tất cả những Task Name được assign cho member vừa mới commit file						
+	3. Module ID:				
+	- Hiển thị Module ID được assigned cho member và sub, cha của PG đó			
+	- Bao gồm Module ID có giá trị là blank			
